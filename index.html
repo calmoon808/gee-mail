@@ -1,18 +1,119 @@
 <html>
 	<head>
+		<title>Gee-Mail</title>
 		<script src="js/mail-generator.js"></script>
 		<link href="css/style.css" rel="stylesheet" media="screen">
     <script>
       window.onload = function(){
         // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
-        // We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-        
-      };
+				// We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
+				var msgBox;
+				var date;
+				var subject;
+				var sender;
+				var msgBody;
+				var newMsg;
+				var count = 0;
+				makeMsgBox(geemails);
+				//counter
+				document.getElementById('count').addEventListener('onchange', counter);
+				function counter(){
+					document.getElementById('count').innerHTML = count;
+				}
+				//event to make body appear and dissapear
+				var messages = document.getElementsByClassName('msgBox');
+				for (var i = 0, n = messages.length; i < n; i++){
+					messages[i].addEventListener('click', showBody);
+				}
+				
+				//timer function
+				var timerId = setInterval(function(){
+					newMsg = getNewMessage()
+					//msg box
+					msgBox = document.createElement('div');
+					msgBox.className = 'msgBox';
+					main.appendChild(msgBox);
+					//date
+					date = document.createElement('div');
+					date.className = 'date';
+					date.innerHTML = 'Date: ' + newMsg.date;
+					msgBox.appendChild(date);
+					//sender
+					sender = document.createElement('div');
+					sender.className = 'sender';
+					sender.innerHTML = 'Sender: ' + newMsg.sender;
+					msgBox.appendChild(sender);
+					//subject
+					subject = document.createElement('div');
+					subject.className = 'subject';
+					subject.innerHTML = 'Subject: ' + newMsg.subject;
+					msgBox.appendChild(subject);
+					//msgBody
+					msgBody = document.createElement('div');
+					msgBody.className = 'msgBody';
+					msgBody.innerHTML = 'Body: ' + newMsg.body;
+					msgBody.style.display = 'none';
+					msgBox.appendChild(msgBody);
+					//how/hide body
+					messages = document.getElementsByClassName('msgBox');
+					messages[messages.length - 1].addEventListener('click', showBody);
+					count++;
+					document.getElementById('count').innerHTML = count;
+				}, 5000);
+
+
+				//msgBox container function
+				function makeMsgBox(list){	
+					for(var i = 0, n = list.length; i < n; i++){
+						//msgBox for click event
+						msgBox = document.createElement('div');
+						msgBox.className = 'msgBox';
+						main.appendChild(msgBox);
+						//date
+						date = document.createElement('div');
+						date.className = 'date';
+						date.innerHTML = 'Date: ' + list[i].date;
+						msgBox.appendChild(date);
+						//sender
+						sender = document.createElement('div');
+						sender.className = 'sender';
+						sender.innerHTML = 'Sender: ' + list[i].sender;
+						msgBox.appendChild(sender);
+						//subject
+						subject = document.createElement('div');
+						subject.className = 'subject';
+						subject.innerHTML = 'Subject: ' + list[i].subject;
+						msgBox.appendChild(subject);
+						//msgBody
+						msgBody = document.createElement('div');
+						msgBody.className = 'msgBody';
+						msgBody.innerHTML = 'Body: ' + list[i].body;
+						msgBody.style.display = 'none';
+						msgBox.appendChild(msgBody);
+						count++;
+						document.getElementById('count').innerHTML = count;
+					}
+				}
+
+				//function to open and close "body"
+				function showBody(){
+					if(this.querySelector('.msgBody').style.display === 'none'){
+						this.querySelector('.msgBody').style.display = 'block';
+					} else {
+						this.querySelector('.msgBody').style.display = 'none';
+					}
+				}
+			}
     </script>
 	</head>
 	<body>
+		<header>
+			<h1>MESSAGES </h1>
+			<div class="content">
+				<div id="count"></div>
+			</div>
+		</header>
 		<div class="container" id="main">
-			Build Me!
 		</div>
 	</body>
 </html>
