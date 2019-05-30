@@ -3,6 +3,7 @@
 		<title>Gee-Mail</title>
 		<script src="js/mail-generator.js"></script>
 		<link href="css/style.css" rel="stylesheet" media="screen">
+		<link href="https://fonts.googleapis.com/css?family=Raleway:200,400&display=swap" rel="stylesheet">
     <script>
       window.onload = function(){
         // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
@@ -25,7 +26,8 @@
 					newMsg = getNewMessage()
 					//msg box
 					msgBox = makeBox();
-					main.appendChild(msgBox);
+					msgBox.style.display = 'block';
+					main.prepend(msgBox);
 					//date
 					date = makeElem('div', 'date', 'Date', newMsg.date);
 					msgBox.appendChild(date);
@@ -44,7 +46,7 @@
 					//change count
 					count++;
 					document.getElementById('count').innerHTML = count;
-				}, 5000);
+				}, 10000);
 
 
 				//msgBox container function
@@ -52,6 +54,7 @@
 					for(var i = 0, n = list.length; i < n; i++){
 						//msgBox for click event
 						msgBox = makeBox();
+						msgBox.style.display = 'block';
 						main.appendChild(msgBox);
 						//date
 						date = makeElem('div', 'date', 'Date', list[i].date);
@@ -96,6 +99,34 @@
 					box.className = 'msgBox'
 					return box;
 				}
+				
+				//random functionality
+				var idSpam = document.getElementById('spamSite');
+				var msgBoxes = document.getElementsByClassName('msgBox');
+				document.getElementById('spam').addEventListener('click', showSpam);
+				function showSpam(){
+					for(var i = 0; i < msgBoxes.length; i++){
+						if(msgBoxes[i].style.display === 'block'){
+							msgBoxes[i].style.display = 'none';
+						}
+					}
+					if(idSpam.style.display === 'none'){
+						idSpam.style.display = 'block';
+					}
+				}
+
+				document.getElementById('inbox').addEventListener('click', showInbox);
+				function showInbox(){
+					for(var i = 0; i < msgBoxes.length; i++){
+						if(msgBoxes[i].style.display === 'none'){
+							msgBoxes[i].style.display = 'block';
+						}
+					}
+					if(idSpam.style.display === 'block'){
+						idSpam.style.display = 'none';
+					}
+				}
+
 			}
     </script>
 	</head>
@@ -103,13 +134,23 @@
 		<header>
 			<div id="title">
 				<h1>Gee-Mail</h1>
-				<div id="count"></div>
 				<img src="assests/kisspng-g-suite-gmail-computer-icons-google-email-e-mail-5ad074ba7e8a91.7988519415236108105183.png" alt="" id="mailIcon">
 			</div>
 			<div class="content">
 			</div>
 		</header>
-		<div class="container" id="main">
+		<div id='sideBar'>
+			<div id="inbox">
+				Inbox [<span id="count"></span>]
+			</div>
+			<div class="important">Important</div>
+			<div class="sent">Sent</div>
+			<div id="spam">Spam</div>
+		</div>
+		<div class="container" id="main" style="display: block">
+				<iframe id='spamSite' style="display: none" src="https://www.spam.com/" width="555" height="200">
+
+			 </iframe>
 		</div>
 	</body>
 </html>
