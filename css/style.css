@@ -1,0 +1,34 @@
+html{
+    background-color: white;
+}
+
+h1{
+    font-size: 8em;
+}
+
+#title{
+    font-size: 5px;
+}
+
+.msgBox{
+    padding: 20px;
+    border-radius: 25px;
+    background-color: green;
+    margin: 25px;
+}
+
+#count{
+    float: right;
+    font-size: 4em;
+    position: absolute;
+    top: 8;
+    right: 12;
+}
+
+#mailIcon{
+    height: 6em;
+    width: 6em;
+    position: absolute;
+    right: 8;
+    top: 30;
+}

@@ -7,7 +7,6 @@
       window.onload = function(){
         // ALL OF YOUR JAVASCRIPT CODE SHOULD GO HERE. 
 				// We have to use window.onload so your JavaScript doesn't execute until the page has loaded and all HTML has been downloaded to your browser
-				var msgBox;
 				var date;
 				var subject;
 				var sender;
@@ -20,43 +19,29 @@
 				function counter(){
 					document.getElementById('count').innerHTML = count;
 				}
-				//event to make body appear and dissapear
-				var messages = document.getElementsByClassName('msgBox');
-				for (var i = 0, n = messages.length; i < n; i++){
-					messages[i].addEventListener('click', showBody);
-				}
 				
 				//timer function
 				var timerId = setInterval(function(){
 					newMsg = getNewMessage()
 					//msg box
-					msgBox = document.createElement('div');
-					msgBox.className = 'msgBox';
+					msgBox = makeBox();
 					main.appendChild(msgBox);
 					//date
-					date = document.createElement('div');
-					date.className = 'date';
-					date.innerHTML = 'Date: ' + newMsg.date;
+					date = makeElem('div', 'date', 'Date', newMsg.date);
 					msgBox.appendChild(date);
 					//sender
-					sender = document.createElement('div');
-					sender.className = 'sender';
-					sender.innerHTML = 'Sender: ' + newMsg.sender;
+					sender = makeElem('div', 'sender', 'Sender', newMsg.sender);
 					msgBox.appendChild(sender);
 					//subject
-					subject = document.createElement('div');
-					subject.className = 'subject';
-					subject.innerHTML = 'Subject: ' + newMsg.subject;
+					subject = makeElem('div', 'subject', 'Subject', newMsg.subject);
 					msgBox.appendChild(subject);
 					//msgBody
-					msgBody = document.createElement('div');
-					msgBody.className = 'msgBody';
-					msgBody.innerHTML = 'Body: ' + newMsg.body;
+					msgBody = makeElem('div', 'msgBody', 'Body', newMsg.body);
 					msgBody.style.display = 'none';
+					//show/hide body
+					msgBox.addEventListener('click', showBody);
 					msgBox.appendChild(msgBody);
-					//how/hide body
-					messages = document.getElementsByClassName('msgBox');
-					messages[messages.length - 1].addEventListener('click', showBody);
+					//change count
 					count++;
 					document.getElementById('count').innerHTML = count;
 				}, 5000);
@@ -66,30 +51,24 @@
 				function makeMsgBox(list){	
 					for(var i = 0, n = list.length; i < n; i++){
 						//msgBox for click event
-						msgBox = document.createElement('div');
-						msgBox.className = 'msgBox';
+						msgBox = makeBox();
 						main.appendChild(msgBox);
 						//date
-						date = document.createElement('div');
-						date.className = 'date';
-						date.innerHTML = 'Date: ' + list[i].date;
+						date = makeElem('div', 'date', 'Date', list[i].date);
 						msgBox.appendChild(date);
 						//sender
-						sender = document.createElement('div');
-						sender.className = 'sender';
-						sender.innerHTML = 'Sender: ' + list[i].sender;
+						sender = makeElem('div', 'sender', 'Sender', list[i].sender);
 						msgBox.appendChild(sender);
 						//subject
-						subject = document.createElement('div');
-						subject.className = 'subject';
-						subject.innerHTML = 'Subject: ' + list[i].subject;
+						subject = makeElem('div', 'subject', 'Subject', list[i].subject);
 						msgBox.appendChild(subject);
 						//msgBody
-						msgBody = document.createElement('div');
-						msgBody.className = 'msgBody';
-						msgBody.innerHTML = 'Body: ' + list[i].body;
+						msgBody = makeElem('div', 'msgBody', 'Body', list[i].body);
 						msgBody.style.display = 'none';
 						msgBox.appendChild(msgBody);
+						//show/hide body
+						msgBox.addEventListener('click', showBody);
+						//change count
 						count++;
 						document.getElementById('count').innerHTML = count;
 					}
@@ -103,14 +82,31 @@
 						this.querySelector('.msgBody').style.display = 'none';
 					}
 				}
+
+				//make element function
+				function makeElem(elem, label, prefix, info){
+					var elemBox = document.createElement(elem);
+					elemBox.className = label;
+					elemBox.innerHTML = prefix + ': ' + info;
+  				return elemBox;
+				}
+				//make msg box function
+				function makeBox(){
+					var box = document.createElement('div');
+					box.className = 'msgBox'
+					return box;
+				}
 			}
     </script>
 	</head>
 	<body>
 		<header>
-			<h1>MESSAGES </h1>
-			<div class="content">
+			<div id="title">
+				<h1>Gee-Mail</h1>
 				<div id="count"></div>
+				<img src="assests/kisspng-g-suite-gmail-computer-icons-google-email-e-mail-5ad074ba7e8a91.7988519415236108105183.png" alt="" id="mailIcon">
+			</div>
+			<div class="content">
 			</div>
 		</header>
 		<div class="container" id="main">
